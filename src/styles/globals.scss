@@ -5,4 +5,14 @@
   font-family: Inter, 'sans serif';
 }
 
-// TODO
+:root {
+  background: #1A1D23;
+  highlight: #FF57B2;
+  heading: #F8F8F8;
+  info: #BBBBBB;
+  body: #D7D7D7;
+}
+
+body {
+  background-color: var(--background);
+}

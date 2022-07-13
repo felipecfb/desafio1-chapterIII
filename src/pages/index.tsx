@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import Header from '../components/Header';
 
 import { getPrismicClient } from '../services/prismic';
 
@@ -26,8 +27,11 @@ interface HomeProps {
 
 export default function Home() {
   return (
-    <div>Home</div>
-  )
+    <>
+      <Header />
+      <div className={styles.container}></div>
+    </>
+  );
 }
 
 // export const getStaticProps = async () => {
