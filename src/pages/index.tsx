@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 import { FiCalendar, FiUser } from 'react-icons/fi';
+import { useState } from 'react';
 
 interface Post {
   uid?: string;
@@ -46,6 +47,21 @@ export default function Home({ postsPagination }: HomeProps) {
     };
   });
 
+  const [nextPage, setNextPage] = useState(postsPagination.next_page);
+
+  async function handleNextPage() {
+    if (nextPage === null) {
+      return;
+    }
+
+    const response = await fetch(nextPage);
+    const data = await response.json();
+    setNextPage(data.next_page);
+  }
+
+  console.log(nextPage);
+  
+
   return (
     <>
       <title>Home | spacetraveling</title>
@@ -74,7 +90,7 @@ export default function Home({ postsPagination }: HomeProps) {
             </Link>
           ))}
           {postsPagination.next_page && (
-            <button className={styles.morePosts}>Carregar mais posts</button>
+            <button className={styles.morePosts} onClick={handleNextPage}>Carregar mais posts</button>
           )}
         </div>
       </main>
@@ -86,7 +102,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient();
 
   const postsResponse = await prismic.getByType('posts', {
-    pageSize: 6,
+    pageSize: 5,
   });
 
   const posts = postsResponse.results.map(post => {
