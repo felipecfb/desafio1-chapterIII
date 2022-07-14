@@ -48,7 +48,7 @@ export default function Home({ postsPagination }: HomeProps) {
 
   return (
     <>
-      <Head>Home | spacetraveling</Head>
+      <title>Home | spacetraveling</title>
 
       <main className={commonStyles.container}>
         <Header />

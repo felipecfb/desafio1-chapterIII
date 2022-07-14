@@ -40,19 +40,11 @@ export default function Post({ post }: PostProps) {
     return <h1>Carregando...</h1>;
   }
 
-  const formattedPost = {
-    ...post,
-    first_publication_date: format(
-      new Date(post.first_publication_date),
-      'dd MMM yyyy',
-      {
-        locale: ptBR,
-      }
-    ),
-  };
-
   return (
     <>
+      <title>
+      {post.data.title} | spacetraveling
+      </title>
       <Header />
       <img src={post.data.banner.url} alt="imagem" className={styles.banner} />
       <main className={commonStyles.container}>
