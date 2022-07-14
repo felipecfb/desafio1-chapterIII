@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
 import Header from '../components/Header';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import { getPrismicClient } from '../services/prismic';
 
@@ -53,22 +54,24 @@ export default function Home({ postsPagination }: HomeProps) {
         <Header />
         <div className={styles.container}>
           {formattedPost.map(post => (
-            <a href={post.uid}>
-              <div key={post.uid} className={styles.post}>
-                <h2 className={styles.postTitle}>{post.data.title}</h2>
-                <p className={styles.postSubtitle}>{post.data.subtitle}</p>
-                <div className={styles.postInfo}>
-                  <div className={styles.postDate}>
-                    <FiCalendar />
-                    <p>{post.first_publication_date}</p>
-                  </div>
-                  <div className={styles.postAuthor}>
-                    <FiUser />
-                    <p>{post.data.author}</p>
+            <Link href={`post/${post.uid}`} key={post.uid}>
+              <a href={`post/${post.uid}`}>
+                <div className={styles.post}>
+                  <h2 className={styles.postTitle}>{post.data.title}</h2>
+                  <p className={styles.postSubtitle}>{post.data.subtitle}</p>
+                  <div className={styles.postInfo}>
+                    <div className={styles.postDate}>
+                      <FiCalendar />
+                      <p>{post.first_publication_date}</p>
+                    </div>
+                    <div className={styles.postAuthor}>
+                      <FiUser />
+                      <p>{post.data.author}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </Link>
           ))}
           {postsPagination.next_page && (
             <button className={styles.morePosts}>Carregar mais posts</button>
@@ -83,7 +86,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient();
 
   const postsResponse = await prismic.getByType('posts', {
-    pageSize: 5,
+    pageSize: 6,
   });
 
   const posts = postsResponse.results.map(post => {
